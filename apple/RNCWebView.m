@@ -836,6 +836,15 @@ static NSDictionary* customCertificatesForHost;
             }
         }
     }
+    if ([[challenge protectionSpace] authenticationMethod] == NSURLAuthenticationMethodHTTPBasic) {
+        NSString *username = [_basicAuthCredential valueForKey:@"username"];
+        NSString *password = [_basicAuthCredential valueForKey:@"password"];
+        if (username && password) {
+            NSURLCredential *credential = [NSURLCredential credentialWithUser:username password:password persistence:NSURLCredentialPersistenceNone];
+            completionHandler(NSURLSessionAuthChallengeUseCredential, credential);
+            return;
+        }
+    }
     completionHandler(NSURLSessionAuthChallengePerformDefaultHandling, nil);
 }
 
