@@ -160,6 +160,7 @@ export default class WebView extends React.Component<WebViewSharedProps, State> 
     if(onLoadEnd) {
       onLoadEnd(event);
     }
+    if (event.isDefaultPrevented()) return;
     console.error('Encountered an error loading page', event.nativeEvent);
     this.setState({
       lastErrorEvent: event.nativeEvent,

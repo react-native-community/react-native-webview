@@ -300,6 +300,8 @@ url
 > **_Note_**
 > Domain is only used on iOS
 
+The `syntheticEvent` can be stopped doing its default action by calling `syntheticEvent.preventDefault()`.
+
 ---
 
 ### `onLoad`[⬆](#props-index)<!-- Link generated with jump2header -->
