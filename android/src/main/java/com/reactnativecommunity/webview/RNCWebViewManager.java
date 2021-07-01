@@ -19,6 +19,7 @@ import android.os.SystemClock;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
@@ -341,6 +342,11 @@ public class RNCWebViewManager extends SimpleViewManager<WebView> {
         break;
     }
     view.setOverScrollMode(overScrollMode);
+  }
+
+  @ReactProp(name = "nestedScrollEnabled")
+  public void setNestedScrollEnabled(WebView view, boolean enabled) {
+    ((RNCWebView) view).setNestedScrollEnabled(enabled);
   }
 
   @ReactProp(name = "thirdPartyCookiesEnabled")
@@ -1405,6 +1411,7 @@ public class RNCWebViewManager extends SimpleViewManager<WebView> {
     protected boolean sendContentSizeChangeEvents = false;
     private OnScrollDispatchHelper mOnScrollDispatchHelper;
     protected boolean hasScrollEvent = false;
+    protected boolean nestedScrollEnabled = false;
     protected ProgressChangedFilter progressChangedFilter;
 
     /**
@@ -1431,6 +1438,10 @@ public class RNCWebViewManager extends SimpleViewManager<WebView> {
       this.hasScrollEvent = hasScrollEvent;
     }
 
+    public void setNestedScrollEnabled(boolean nestedScrollEnabled) {
+      this.nestedScrollEnabled = nestedScrollEnabled;
+    }
+
     @Override
     public void onHostResume() {
       // do nothing
@@ -1444,6 +1455,14 @@ public class RNCWebViewManager extends SimpleViewManager<WebView> {
     @Override
     public void onHostDestroy() {
       cleanupCallbacksAndDestroy();
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+      if (this.nestedScrollEnabled) {
+        requestDisallowInterceptTouchEvent(true);
+      }
+      return super.onTouchEvent(event);
     }
 
     @Override
