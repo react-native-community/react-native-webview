@@ -30,7 +30,7 @@
     "type": "Component"
   },
   "peerDependencies": {
-    "react-native": ">=0.60 <=0.64"
+    "react-native": ">=0.60"
   },
   "dependencies": {
     "escape-string-regexp": "2.0.0",
