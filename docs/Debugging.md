@@ -82,7 +82,7 @@ It's possible to debug WebView contents in the Android emulator or on a device u
 ```
 
 2. Start app with React Native WebView in Android emulator or Android device
-3. Chrome -> DevTools -> Menu (3 dots) -> More tools -> Remote devices
+3. Open `chrome://inspect/#devices` on Chrome (Reference: [Remote debug Android devices](https://developer.chrome.com/docs/devtools/remote-debugging/))
 4. Select your device on the left and select "Inspect" on the WebView contents you'd like to inspect
 5. You can now debug the WebView contents just as you would on the web
 
