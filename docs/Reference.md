@@ -76,6 +76,7 @@ This document lays out the current public properties and methods for the React N
 - [`limitsNavigationsToAppBoundDomains`](Reference.md#limitsNavigationsToAppBoundDomains)
 - [`autoManageStatusBarEnabled`](Reference.md#autoManageStatusBarEnabled)
 - [`setSupportMultipleWindows`](Reference.md#setSupportMultipleWindows)
+- [`basicAuthCredential`](Reference.md#basicAuthCredential)
 - [`enableApplePay`](Reference.md#enableApplePay)
 
 ## Methods Index
@@ -1384,6 +1385,17 @@ Example:
 ```javascript
 <WebView enableApplePay={true} />
 ```
+
+### `basicAuthCredential`
+
+An object that specifies the credentials of a user to be used for basic authentication.
+
+- `username` (string) - A username used for basic authentication.
+- `password` (string) - A password used for basic authentication.
+
+| Type   | Required |
+| ------ | -------- |
+| object | No       |
 
 ## Methods
 
