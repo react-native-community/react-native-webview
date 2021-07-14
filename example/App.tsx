@@ -20,8 +20,17 @@ import LocalPageLoad from './examples/LocalPageLoad';
 import Messaging from './examples/Messaging';
 import NativeWebpage from './examples/NativeWebpage';
 import ApplePay from './examples/ApplePay';
+import Blob from './examples/Blob';
 
 const TESTS = {
+  Blob: {
+    title: 'Blob link',
+    testId: 'blob',
+    description: 'blob link test',
+    render() {
+        return <Blob />;
+    }
+  },
   Messaging: {
     title: 'Messaging',
     testId: 'messaging',
@@ -179,6 +188,13 @@ export default class App extends Component<Props, State> {
               onPress={() => this._changeTest('Uploads')}
             />
           )}
+
+          <Button
+            testID="testType_blob"
+            title="Blob link"
+            onPress={() => this._changeTest('Blob')}
+          />
+
           <Button
             testID="testType_messaging"
             title="Messaging"

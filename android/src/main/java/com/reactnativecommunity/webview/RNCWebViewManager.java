@@ -81,6 +81,7 @@ import com.reactnativecommunity.webview.events.TopLoadingStartEvent;
 import com.reactnativecommunity.webview.events.TopMessageEvent;
 import com.reactnativecommunity.webview.events.TopShouldStartLoadWithRequestEvent;
 import com.reactnativecommunity.webview.events.TopRenderProcessGoneEvent;
+import com.reactnativecommunity.webview.events.TopDownloadUnsupportedURLEvent;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -207,6 +208,17 @@ public class RNCWebViewManager extends SimpleViewManager<WebView> {
 
     webView.setDownloadListener(new DownloadListener() {
       public void onDownloadStart(String url, String userAgent, String contentDisposition, String mimetype, long contentLength) {
+        if (!url.startsWith("http")) {
+          WritableMap event = Arguments.createMap();
+          event.putString("url", url);
+          event.putString("contentDisposition", contentDisposition);
+          event.putString("mimetype", mimetype);
+          webView.dispatchEvent(
+            webView,
+            new TopDownloadUnsupportedURLEvent(webView.getId(), event));
+          return;
+        }
+
         webView.setIgnoreErrFailedForThisURL(url);
 
         RNCWebViewModule module = getModule(reactContext);
@@ -610,6 +622,7 @@ public class RNCWebViewManager extends SimpleViewManager<WebView> {
     export.put(ScrollEventType.getJSEventName(ScrollEventType.SCROLL), MapBuilder.of("registrationName", "onScroll"));
     export.put(TopHttpErrorEvent.EVENT_NAME, MapBuilder.of("registrationName", "onHttpError"));
     export.put(TopRenderProcessGoneEvent.EVENT_NAME, MapBuilder.of("registrationName", "onRenderProcessGone"));
+    export.put(TopDownloadUnsupportedURLEvent.EVENT_NAME, MapBuilder.of("registrationName", "onDownloadUnsupportedURL"));
     return export;
   }
 

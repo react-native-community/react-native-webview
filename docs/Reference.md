@@ -73,6 +73,7 @@ This document lays out the current public properties and methods for the React N
 - [`pullToRefreshEnabled`](Reference.md#pullToRefreshEnabled)
 - [`ignoreSilentHardwareSwitch`](Reference.md#ignoreSilentHardwareSwitch)
 - [`onFileDownload`](Reference.md#onFileDownload)
+- [`onDownloadUnsupportedURL`](Reference.md#onDownloadUnsupportedURL)
 - [`limitsNavigationsToAppBoundDomains`](Reference.md#limitsNavigationsToAppBoundDomains)
 - [`autoManageStatusBarEnabled`](Reference.md#autoManageStatusBarEnabled)
 - [`setSupportMultipleWindows`](Reference.md#setSupportMultipleWindows)
@@ -1316,6 +1317,38 @@ Example:
 | function | No       | iOS      |
 
 ---
+
+### `onDownloadUnsupportedURL`[⬆](#props-index)<!-- Link generated with jump2header -->
+
+Function that is invoked when download a url not http(s) protocol(such as blob:http..., data:image/base64), only works in android, you can intercept the link by `onShouldStartLoadWithRequest` in ios.
+
+| Type     | Required | Platform            |
+| -------- | -------- | ------------------- |
+| function | No       | Android |
+
+Example:
+
+```jsx
+<WebView
+  source={{ uri: 'https://reactnative.dev' }}
+  onDownloadUnsupportedURL={(syntheticEvent) => {
+    const { nativeEvent } = syntheticEvent;
+    this.url = nativeEvent.url;
+    // resolve url here, such as inject js to fetch blob url or show a image of base64 uri source
+  }}
+/>
+```
+Function passed to `onDownloadUnsupportedURL` is called with a SyntheticEvent wrapping a nativeEvent with these properties:
+
+```
+url
+contentDisposition
+mimetype
+```
+
+
+---
+
 
 ### `limitsNavigationsToAppBoundDomains`[⬆](#props-index)<!-- Link generated with jump2header -->
 

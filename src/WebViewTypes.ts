@@ -797,6 +797,7 @@ export interface MacOSWebViewProps extends WebViewSharedProps {
 }
 
 export interface AndroidWebViewProps extends WebViewSharedProps {
+  onDownloadUnSupportedURL?: (event: WebViewEvent) => void;
   onNavigationStateChange?: (event: WebViewNavigation) => void;
   onContentSizeChange?: (event: WebViewEvent) => void;
 
