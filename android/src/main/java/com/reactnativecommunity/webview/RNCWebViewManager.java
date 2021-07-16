@@ -45,6 +45,8 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.core.content.ContextCompat;
 import androidx.core.util.Pair;
+import androidx.webkit.WebSettingsCompat;
+import androidx.webkit.WebViewFeature;
 
 import com.facebook.common.logging.FLog;
 import com.facebook.react.modules.core.PermissionAwareActivity;
@@ -591,6 +593,27 @@ public class RNCWebViewManager extends SimpleViewManager<WebView> {
   @ReactProp(name = "onScroll")
   public void setOnScroll(WebView view, boolean hasScrollEvent) {
     ((RNCWebView) view).setHasScrollEvent(hasScrollEvent);
+  }
+
+  @ReactProp(name = "forceDarkOn")
+  public void setForceDarkOn(WebView view, boolean enabled) {
+    // Only Android 10+ support dark mode
+    if (Build.VERSION.SDK_INT > Build.VERSION_CODES.P) {
+      // Switch WebView dark mode
+      if (WebViewFeature.isFeatureSupported(WebViewFeature.FORCE_DARK)) {
+        int forceDarkMode = enabled ? WebSettingsCompat.FORCE_DARK_ON : WebSettingsCompat.FORCE_DARK_OFF;
+        WebSettingsCompat.setForceDark(view.getSettings(), forceDarkMode);
+      }
+
+      // Set how WebView content should be darkened.
+      // PREFER_WEB_THEME_OVER_USER_AGENT_DARKENING:  checks for the "color-scheme" <meta> tag.
+      // If present, it uses media queries. If absent, it applies user-agent (automatic)
+      // More information about Force Dark Strategy can be found here:
+      // https://developer.android.com/reference/androidx/webkit/WebSettingsCompat#setForceDarkStrategy(android.webkit.WebSettings)
+      if (enabled && WebViewFeature.isFeatureSupported(WebViewFeature.FORCE_DARK_STRATEGY)) {
+        WebSettingsCompat.setForceDarkStrategy(view.getSettings(), WebSettingsCompat.DARK_STRATEGY_PREFER_WEB_THEME_OVER_USER_AGENT_DARKENING);
+      }
+    }
   }
 
   @Override

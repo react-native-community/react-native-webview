@@ -77,6 +77,7 @@ This document lays out the current public properties and methods for the React N
 - [`autoManageStatusBarEnabled`](Reference.md#autoManageStatusBarEnabled)
 - [`setSupportMultipleWindows`](Reference.md#setSupportMultipleWindows)
 - [`enableApplePay`](Reference.md#enableApplePay)
+- [`forceDarkOn`](Reference.md#forceDarkOn)
 
 ## Methods Index
 
@@ -1383,6 +1384,23 @@ Example:
 
 ```javascript
 <WebView enableApplePay={true} />
+```
+
+### `forceDarkOn`
+
+Configuring Dark Theme
+*NOTE* : The force dark setting is not persistent. You must call the static method every time your app process is started.
+
+*NOTE* : The change from day<->night mode is a configuration change so by default the activity will be restarted and pickup the new values to apply the theme. Take care when overriding this default behavior to ensure this method is still called when changes are made.
+
+| Type    | Required | Platform |
+| ------- | -------- | -------- |
+| boolean | No       | Android  |
+
+Example:
+
+```javascript
+<WebView forceDarkOn={false} />
 ```
 
 ## Methods
